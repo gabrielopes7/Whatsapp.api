@@ -1,7 +1,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace Whatsapp.Microservice.Models
+namespace Whatsapp.Microservice.Models.Requisicao
 {
     public class MensagemTextoRequisicao
     {
@@ -14,10 +14,10 @@ namespace Whatsapp.Microservice.Models
         [JsonPropertyName("type")]
         public string? Type { get; set; } = "text";
         [JsonPropertyName("text")]
-        public Text? Text { get; set; }
+        public Texto? Text { get; set; }
     }
 
-    public class Text
+    public class Texto
     {
         [JsonPropertyName("preview_url")] 
         public bool PreviewUrl { get; set; }

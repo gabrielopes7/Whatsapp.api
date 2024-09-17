@@ -5,6 +5,6 @@ namespace Whatsapp.Microservice.Models.Resposta
     public class RepostaBemSucedida
     {
         [JsonPropertyName("success")]
-        public bool Sucesso { get; set; }
+        public bool Success { get; set; }
     }
 }

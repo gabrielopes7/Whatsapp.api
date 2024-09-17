@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Whatsapp.Microservice.Models.Telefone
 {
-    public class TelefoneVerificarCodigo
+    public class TelefoneVerificarCodigoRequisicao
     {
         [JsonPropertyName("code")]
         public string? Code {get;set;}

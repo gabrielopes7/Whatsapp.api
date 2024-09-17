@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Whatsapp.Microservice.Models.Resposta.Mensagem
 {
@@ -11,12 +7,12 @@ namespace Whatsapp.Microservice.Models.Resposta.Mensagem
         [JsonPropertyName("messaging_product")]
         public string? MessagingProduct { get; set; }
         [JsonPropertyName("contacts")]
-        public List<Contact>? Contacts { get; set; }
+        public List<Contato>? Contacts { get; set; }
         [JsonPropertyName("messages")]
-        public List<Message>? Messages { get; set; }
+        public List<Mensagem>? Messages { get; set; }
     }
 
-    public class Contact
+    public class Contato
     {
         [JsonPropertyName("input")]
         public string? Input { get; set; }
@@ -24,7 +20,7 @@ namespace Whatsapp.Microservice.Models.Resposta.Mensagem
         public string? WAID { get; set; }
     }
 
-    public class Message
+    public class Mensagem
     {
         [JsonPropertyName("id")]
         public string? Id { get; set; }

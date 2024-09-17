@@ -8,7 +8,6 @@ namespace Whatsapp.Microservice.Service.Interfaces
     public interface IConfiguracaoWhatsApp
     {
         public string TOKEN_USUARIO { get;}
-        public string BASE_URL { get;}
         public string WHATSAPP_BUSINESS_PHONE_ID { get;}
         public string WHATSAPP_BUSINESS_ACCOUNT_ID { get;}
     }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Whatsapp.Microservice.Models.Telefone
 {
-    public class TelefoneRegistro
+    public class TelefoneRegistrarRequisicao
     {
         [JsonPropertyName("messaging_product")]
         public string? MessagingProduct {get;private set;} = "whatsapp";

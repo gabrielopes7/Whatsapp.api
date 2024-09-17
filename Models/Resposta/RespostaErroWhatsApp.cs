@@ -5,9 +5,9 @@ namespace Whatsapp.Microservice.Models.Resposta
     public class RespostaErroWhatsApp
     {
         [JsonPropertyName("error")]
-        public Error? Error { get; set; }
+        public Erro? Error { get; set; }
     }
-    public class Error
+    public class Erro
     {
         [JsonPropertyName("message")]
         public string? Message { get; set; }
@@ -20,7 +20,7 @@ namespace Whatsapp.Microservice.Models.Resposta
         [JsonPropertyName("is_transient")]
         public bool IsTransient { get; set; }
         [JsonPropertyName("error_data")]
-        public ErrorData? ErrorData { get; set; }
+        public ErroDado? ErrorData { get; set; }
         [JsonPropertyName("error_user_title")]
         public string? ErrorUserTitle { get; set; }
         [JsonPropertyName("error_user_message")]
@@ -30,7 +30,7 @@ namespace Whatsapp.Microservice.Models.Resposta
 
     }
 
-    public class ErrorData
+    public class ErroDado
     {
         [JsonPropertyName("messaging_product")]
         public string? MessagingProduct { get; set; }

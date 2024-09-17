@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Whatsapp.Microservice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a3bbefe7d56914f923574afaa22aec715af01fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Whatsapp.Microservice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Whatsapp.Microservice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

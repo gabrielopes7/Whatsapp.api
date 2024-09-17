@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Whatsapp.Microservice.Models.Telefone
 {
-    public class TelefoneRequisicaoCodigo
+    public class TelefoneRequisitarCodigoRequisicao
     {
         [JsonPropertyName("code_method")]
         public string CodeMethod {get;set;} = "SMS";

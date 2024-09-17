@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Whatsapp.Microservice.Models.Telefone
 {
-    public class TelefoneCriar
+    public class TelefoneCriarRequisicao
     {
         [JsonPropertyName("cc")]
         public string? CC { get; set; }

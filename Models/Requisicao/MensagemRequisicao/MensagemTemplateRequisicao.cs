@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Whatsapp.Microservice.Models.Requisicao.Mensagem
+namespace Whatsapp.Microservice.Models.Requisicao
 {
     public class MensagemTemplateRequisicao
     {
@@ -25,7 +25,7 @@ namespace Whatsapp.Microservice.Models.Requisicao.Mensagem
         [JsonPropertyName("name")]
         public string? Name { get; set; }
         [JsonPropertyName("language")]
-        public Language? Language { get; set; }
+        public Linguagem? Language { get; set; }
         [JsonPropertyName("components")]
         public List<MensagemTextoComponente>? Components { get; set; }
     }
@@ -106,7 +106,7 @@ namespace Whatsapp.Microservice.Models.Requisicao.Mensagem
         [JsonPropertyName("caption")]
         public string? Caption { get; set; }
     }
-    public class Language
+    public class Linguagem
     {
         [JsonPropertyName("code")]
         public string? Code { get; set; }
