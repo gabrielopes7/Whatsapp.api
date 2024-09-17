@@ -1,0 +1,6 @@
+@Whatsapp.Microservice_HostAddress = http://localhost:5209
+
+GET {{Whatsapp.Microservice_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

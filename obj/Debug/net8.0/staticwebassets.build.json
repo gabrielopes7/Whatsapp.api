@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "l/wkaHkqtTemnMjtxePdATipgVdmgV9Xiwt6JUm5VOY=",
+  "Source": "Whatsapp.Microservice",
+  "BasePath": "_content/Whatsapp.Microservice",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
