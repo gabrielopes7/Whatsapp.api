@@ -4,6 +4,7 @@ using Whatsapp.Microservice.Models;
 using System.Text.Json;
 using Whatsapp.Microservice.Service.Interfaces;
 using Whatsapp.Microservice.Models.Resposta.Mensagem;
+using Whatsapp.Microservice.Models.Resposta;
 
 namespace Whatsapp.Microservice.Controller
 {

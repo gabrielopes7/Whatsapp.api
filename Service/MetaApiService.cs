@@ -12,13 +12,22 @@ namespace Whatsapp.Microservice.Service
     public class MetaApiService : IMetaApiService
     {
         private readonly IConfiguracaoWhatsApp _configuracaoWhatsApp;
-        public MetaApiService(IConfiguracaoWhatsApp configuracaoWhatsApp)
+        private readonly ILogger<MetaApiService> _logger;
+        public MetaApiService(IConfiguracaoWhatsApp configuracaoWhatsApp, ILogger<MetaApiService> logger)
         {
             _configuracaoWhatsApp = configuracaoWhatsApp;
+            _logger = logger;
         }
         public async Task<RestResponse<T>> ChamarApiMeta<T>(String path, String body = "")
         {
-            var options = new RestClientOptions(EndpointRequisicao.EnderecoBase);
+            int maxTentativas = 3;
+            int tentativas = 0;
+            TimeSpan retryDelay;
+
+            var options = new RestClientOptions(EndpointRequisicao.EnderecoBase)
+            {
+                Timeout = TimeSpan.FromSeconds(10)
+            };
             var client = new RestClient(options);
             var request = new RestRequest(path, Method.Post);
 
@@ -26,7 +35,22 @@ namespace Whatsapp.Microservice.Service
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(body);
 
-            return await client.ExecutePostAsync<T>(request);
+            while (tentativas < maxTentativas)
+            {
+                tentativas++;
+                _logger.LogInformation($"Tentativa {tentativas} para o endpoint {request.Resource}");
+
+                var response = await client.ExecutePostAsync<T>(request);
+
+                if (response.IsSuccessful)
+                    return response;
+
+                retryDelay = TimeSpan.FromSeconds(Math.Pow(2, tentativas)) + TimeSpan.FromMilliseconds(new Random().Next(0, 100));
+                _logger.LogWarning($"Falha na tentativa {tentativas}. Aguardando {retryDelay} antes da próxima tentativa.");
+                await Task.Delay(retryDelay);
+            }
+            _logger.LogError($"Número máximo de tentativas ({maxTentativas}) excedido para o endpoint {request.Resource}");
+            throw new Exception("O limite máximo de tentativas foi atingido.");
         }
 
         public async Task<RestResponse<MensagemResposta>> EnviarMensagemRequisicao<MensagemResposta>((String numeroTelefone, String mensagem) parametros)
@@ -154,7 +178,7 @@ namespace Whatsapp.Microservice.Service
 
         public async Task<RestResponse<TelefoneRegistroResposta>> TelefoneRegistrarRequisicao<TelefoneRegistroResposta>(String TELEFONE_ID)
         {
-             var body = new TelefoneRegistrarRequisicao
+            var body = new TelefoneRegistrarRequisicao
             {
                 Pin = "000000"
             };

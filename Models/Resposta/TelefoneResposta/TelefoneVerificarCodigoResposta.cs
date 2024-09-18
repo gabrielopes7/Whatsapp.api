@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Whatsapp.Microservice.Models.Resposta.Telefone
 {
-    public class TelefoneVerificarCodigoResposta : RepostaBemSucedida
+    public class TelefoneVerificarCodigoResposta : RespostaBemSucedida
     {
 
     }
