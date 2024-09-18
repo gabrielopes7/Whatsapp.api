@@ -42,7 +42,7 @@ namespace Whatsapp.Microservice.Service
 
                 var response = await client.ExecutePostAsync<T>(request);
 
-                if (response.IsSuccessful)
+                if (response.IsSuccessful || (int)response.StatusCode < 500)
                     return response;
 
                 retryDelay = TimeSpan.FromSeconds(Math.Pow(2, tentativas)) + TimeSpan.FromMilliseconds(new Random().Next(0, 100));

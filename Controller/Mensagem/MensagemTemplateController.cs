@@ -5,6 +5,7 @@ using Whatsapp.Microservice.Models;
 using System.Text.Json;
 using Whatsapp.Microservice.Service.Interfaces;
 using Whatsapp.Microservice.Models.Resposta.Mensagem;
+using Whatsapp.Microservice.Models.Resposta;
 
 namespace Whatsapp.Microservice.Controller.Mensagem
 {
@@ -25,8 +26,10 @@ namespace Whatsapp.Microservice.Controller.Mensagem
 
             RestResponse<MensagemResposta> response = await _metaApiService.EnviarMensagemTemplateRequisicao<MensagemResposta>(parametros);
 
-            if (!response.IsSuccessful)
-                return BadRequest(response.Content);
+            if (!response.IsSuccessful){
+                RespostaErroWhatsApp responseError = JsonSerializer.Deserialize<RespostaErroWhatsApp>(response.Content!) ?? new RespostaErroWhatsApp();
+                return BadRequest(responseError);
+            }
 
             MensagemResposta mensagemResposta = response.Data ?? new MensagemResposta();
 

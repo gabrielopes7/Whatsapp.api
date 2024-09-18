@@ -25,8 +25,10 @@ namespace Whatsapp.Microservice.Controller
 
             RestResponse<MensagemResposta> response = await _metaApiService.EnviarMensagemRequisicao<MensagemResposta>(parametros);
 
-            if (!response.IsSuccessful)
-                return BadRequest(response.Content);
+            if (!response.IsSuccessful){
+                RespostaErroWhatsApp responseError = JsonSerializer.Deserialize<RespostaErroWhatsApp>(response.Content!) ?? new RespostaErroWhatsApp();
+                return BadRequest(responseError);
+            }
 
             MensagemResposta mensagemResposta = response.Data ?? new MensagemResposta();
 
