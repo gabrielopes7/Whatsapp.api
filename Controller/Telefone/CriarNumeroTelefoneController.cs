@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using Whatsapp.Microservice.Models.DTO;
 using Whatsapp.Microservice.Models.Resposta;
 using Whatsapp.Microservice.Models.Resposta.Telefone;
 using Whatsapp.Microservice.Service.Interfaces;
@@ -23,11 +24,9 @@ namespace Whatsapp.Microservice.Controller.Telefone
         }
 
         [HttpPost("criarNumeroTelefone")]
-        public async Task<IActionResult> CriarNumeroTelefone(String codigoPais, String numeroTelefone, String nome)
+        public async Task<IActionResult> CriarNumeroTelefone([FromBody] TelefoneCriarDTO telefoneCriarDTO)
         {
-            var parametros = (codigoPais, numeroTelefone, nome);
-
-            RestResponse<TelefoneCriarResposta> response = await _metaApiService.TelefoneCriarRequisicao<TelefoneCriarResposta>(parametros);
+            RestResponse<TelefoneCriarResposta> response = await _metaApiService.TelefoneCriarRequisicao<TelefoneCriarResposta>(telefoneCriarDTO);
 
             if (!response.IsSuccessful){
                 RespostaErroWhatsApp responseError = JsonSerializer.Deserialize<RespostaErroWhatsApp>(response.Content!) ?? new RespostaErroWhatsApp();

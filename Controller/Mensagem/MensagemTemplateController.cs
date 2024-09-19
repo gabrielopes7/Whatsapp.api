@@ -6,6 +6,7 @@ using System.Text.Json;
 using Whatsapp.Microservice.Service.Interfaces;
 using Whatsapp.Microservice.Models.Resposta.Mensagem;
 using Whatsapp.Microservice.Models.Resposta;
+using Whatsapp.Microservice.Models.DTO;
 
 namespace Whatsapp.Microservice.Controller.Mensagem
 {
@@ -20,10 +21,8 @@ namespace Whatsapp.Microservice.Controller.Mensagem
         }
 
         [HttpPost("template")]
-        public async Task<IActionResult> EnviarTemplate(String numeroTelefoneCliente, String nomeCliente, String mes, String numeroConta)
+        public async Task<IActionResult> EnviarTemplate([FromBody] TemplateDTO parametros)
         {
-            var parametros = (numeroTelefoneCliente,nomeCliente, mes, numeroConta);
-
             RestResponse<MensagemResposta> response = await _metaApiService.EnviarMensagemTemplateRequisicao<MensagemResposta>(parametros);
 
             if (!response.IsSuccessful){

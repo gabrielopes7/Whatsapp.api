@@ -5,6 +5,7 @@ using System.Text.Json;
 using Whatsapp.Microservice.Service.Interfaces;
 using Whatsapp.Microservice.Models.Resposta.Mensagem;
 using Whatsapp.Microservice.Models.Resposta;
+using Whatsapp.Microservice.Models.DTO;
 
 namespace Whatsapp.Microservice.Controller
 {
@@ -19,11 +20,9 @@ namespace Whatsapp.Microservice.Controller
         }
 
         [HttpPost("texto")]
-        public async Task<IActionResult> EnviarMensagem(String numeroTelefoneCliente, String mensagem)
+        public async Task<IActionResult> EnviarMensagem([FromBody] MensagemDTO mensagemDTO)
         {
-            var parametros = (numeroTelefoneCliente, mensagem);
-
-            RestResponse<MensagemResposta> response = await _metaApiService.EnviarMensagemRequisicao<MensagemResposta>(parametros);
+            RestResponse<MensagemResposta> response = await _metaApiService.EnviarMensagemRequisicao<MensagemResposta>(mensagemDTO);
 
             if (!response.IsSuccessful){
                 RespostaErroWhatsApp responseError = JsonSerializer.Deserialize<RespostaErroWhatsApp>(response.Content!) ?? new RespostaErroWhatsApp();

@@ -2,8 +2,10 @@
 using System.Text;
 using System.Text.Json;
 using RestSharp;
+using Whatsapp.Microservice.Models.DTO;
 using Whatsapp.Microservice.Models.Requisicao;
 using Whatsapp.Microservice.Models.Resposta;
+using Whatsapp.Microservice.Models.Resposta.Mensagem;
 using Whatsapp.Microservice.Models.Telefone;
 using Whatsapp.Microservice.Service.Interfaces;
 
@@ -53,18 +55,18 @@ namespace Whatsapp.Microservice.Service
             throw new Exception("O limite máximo de tentativas foi atingido.");
         }
 
-        public async Task<RestResponse<MensagemResposta>> EnviarMensagemRequisicao<MensagemResposta>((String numeroTelefone, String mensagem) parametros)
+        public async Task<RestResponse<MensagemResposta>> EnviarMensagemRequisicao<MensagemResposta>(MensagemDTO mensagemDTO)
         {
             var body = new MensagemTextoRequisicao
             {
                 MessagingProduct = "whatsapp",
                 RecipientType = "individual",
-                To = parametros.numeroTelefone,
+                To = mensagemDTO.NumeroTelefone,
                 Type = "text",
                 Text = new Texto
                 {
                     PreviewUrl = false,
-                    Body = parametros.mensagem
+                    Body = mensagemDTO.MensagemParaEnvio
                 }
             };
 
@@ -78,17 +80,33 @@ namespace Whatsapp.Microservice.Service
             return await ChamarApiMeta<MensagemResposta>(pathBuilder.ToString(), bodyJson);
         }
 
-        public async Task<RestResponse<MensagemResposta>> EnviarMensagemTemplateRequisicao<MensagemResposta>((String numeroTelefone, String nomeCliente, String mesCliente, String numeroContaCliente) parametros)
+        public async Task<RestResponse<MensagemResposta>> EnviarMensagemTemplateRequisicao<MensagemResposta>(TemplateDTO templateDTO)
         {
+            List<MensagemTextoParametro> listMensagemTextoParametro = new List<MensagemTextoParametro>();
+
+            if (templateDTO.ParametrosTemplate is not null)
+            {
+
+                foreach (var param in templateDTO.ParametrosTemplate)
+                {
+                    MensagemTextoParametro mensagemTextoParametro = new MensagemTextoParametro();
+
+                    mensagemTextoParametro.Type = "text";
+                    mensagemTextoParametro.Text = param.Value;
+
+                    listMensagemTextoParametro.Add(mensagemTextoParametro);
+                }
+            }
+
             var body = new MensagemTemplateRequisicao
             {
                 MessagingProduct = "whatsapp",
                 RecipientType = "individual",
-                To = parametros.numeroTelefone,
+                To = templateDTO.NumeroTelefone,
                 Type = "template",
                 Template = new Template
                 {
-                    Name = "modelo_teste",
+                    Name = templateDTO.NomeTemplate,
                     Language = new Linguagem
                     {
                         Code = "pt_BR"
@@ -96,20 +114,7 @@ namespace Whatsapp.Microservice.Service
                     Components = new List<MensagemTextoComponente> {
                         new MensagemTextoComponente {
                             Type = "body",
-                            Parameters = new List<MensagemTextoParametro>{
-                                new MensagemTextoParametro{
-                                    Type = "text",
-                                    Text = parametros.nomeCliente
-                                },
-                                new MensagemTextoParametro{
-                                    Type = "text",
-                                    Text = parametros.mesCliente
-                                },
-                                new MensagemTextoParametro{
-                                    Type= "text",
-                                    Text = parametros.numeroContaCliente
-                                }
-                            }
+                            Parameters = listMensagemTextoParametro
                         }
                     }
                 }
@@ -124,13 +129,13 @@ namespace Whatsapp.Microservice.Service
 
             return await ChamarApiMeta<MensagemResposta>(pathBuilder.ToString(), bodyJson);
         }
-        public async Task<RestResponse<TelefoneCriarResposta>> TelefoneCriarRequisicao<TelefoneCriarResposta>((String codigoPais, String numeroTelefone, String nome) parametros)
+        public async Task<RestResponse<TelefoneCriarResposta>> TelefoneCriarRequisicao<TelefoneCriarResposta>(TelefoneCriarDTO telefoneCriarDTO)
         {
             var body = new TelefoneCriarRequisicao
             {
-                CC = parametros.codigoPais,
-                PhoneNumber = parametros.numeroTelefone,
-                VerifiedName = parametros.nome
+                CC = telefoneCriarDTO.CodigoDoPais,
+                PhoneNumber = telefoneCriarDTO.NumeroTelefone,
+                VerifiedName = telefoneCriarDTO.NomeEmpresa
             };
 
             string bodyJson = JsonSerializer.Serialize(body, new JsonSerializerOptions { WriteIndented = true });

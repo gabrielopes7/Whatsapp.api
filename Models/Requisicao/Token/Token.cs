@@ -18,12 +18,4 @@ namespace Whatsapp.Microservice.Models.Token
         [JsonPropertyName("fetch_only")]
         public Boolean FetchOnly { get; set; }
     }
-
-    /*
-        curl -i -X POST "https://graph.facebook.com/v20.0/<CLIENT_BUSINESS_ID>/system_user_access_tokens
-                        ?appsecret_proof=<APPSECRET_PROOF_HASH>
-                        &access_token=<ACCESS_TOKEN>
-                        &system_user_id=<SYSTEM_USER_ID>
-                        &fetch_only=true"
-    */
 }

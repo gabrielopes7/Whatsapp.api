@@ -10,7 +10,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IMetaApiService, MetaApiService>();
-builder.Services.AddTransient<IHash256GenerateService, Hash256GenerateService>();
 builder.Services.AddTransient<IConfiguracaoWhatsApp, ConfiguracaoWhatsApp>();
 
 var app = builder.Build();
